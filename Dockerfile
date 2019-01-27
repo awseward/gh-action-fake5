@@ -13,3 +13,7 @@ ENV LC_ALL=en_US.UTF-8
 ENV LC_TYPE=en_US.UTF-8
 
 ENV FAKE_DETAILED_ERRORS=true
+
+ADD entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
