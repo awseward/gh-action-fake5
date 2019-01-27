@@ -5,12 +5,12 @@ This Action wraps the FAKE CLI to enable common [FAKE](https://fake.build/) comm
 #### Example `.github/main.workflow`:
 
 ```hcl
-workflow "some-workflow" {
+workflow "Example workflow" {
   on = "push"
-  resolves = ["some-target"]
+  resolves = ["Run a FAKE target"]
 }
 
-action "some-target" {
+action "Run a FAKE target" {
   uses = "awseward/gh-action-fake5@master"
   args = ["some_target"]
 }
