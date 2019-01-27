@@ -1,6 +1,6 @@
 workflow "Push base image to Docker Hub" {
   on = "push"
-  resolves = ["images"]
+  resolves = ["push sha", "push latest"]
 }
 
 action "login" {
@@ -11,17 +11,34 @@ action "login" {
 action "build" {
   uses = "actions/docker/cli@master"
   needs = ["login"]
+
   args = "build -t base .base/"
 }
 
 action "tag" {
   uses = "actions/docker/tag@master"
   needs = ["build"]
-  args = "base awseward/gh-action-fake5 --env"
+
+  args = "base $GITHUB_REPOSITORY --env"
 }
 
-action "images" {
+action "push sha" {
   uses = "actions/docker/cli@master"
   needs = ["tag"]
-  args = "images"
+
+  args = "push $GITHUB_REPOSITORY:$IMAGE_SHA"
+}
+
+action "master only" {
+  uses = "actions/bin/filter@master"
+  needs = ["tag"]
+
+  args = "branch master"
+}
+
+action "push latest" {
+  uses = "actions/docker/cli@master"
+  needs = ["master only"]
+
+  args = "push $GITHUB_REPOSITORY:latest"
 }
