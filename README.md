@@ -1,6 +1,6 @@
-# gh-action-fake5
+# GitHub Action for FAKE
 
-This repo presents a very basic GitHub Action for invoking FAKE 5 targets.
+This Action wraps the FAKE CLI to enable common [FAKE](https://fake.build/) commands.
 
 #### Example `.github/main.workflow`:
 
