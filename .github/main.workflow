@@ -1,15 +1,27 @@
 workflow "Push base image to Docker Hub" {
   on = "push"
-  resolves = ["docker build"]
+  resolves = ["images"]
 }
 
-action "docker login" {
-  uses = "actions/docker/login@c08a5fc9e0286844156fefff2c141072048141f6"
+action "login" {
+  uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
 
-action "docker build" {
-  uses = "actions/docker/cli@c08a5fc9e0286844156fefff2c141072048141f6"
-  needs = ["docker login"]
-  args = "build -t awseward/gh-action-fake5 .base/"
+action "build" {
+  uses = "actions/docker/cli@master"
+  needs = ["login"]
+  args = "build -t base .base/"
+}
+
+action "tag" {
+  uses = "actions/docker/tag@master"
+  needs = ["build"]
+  args = "base awseward/gh-action-fake5 --env"
+}
+
+action "images" {
+  uses = "actions/docker/cli@master"
+  needs = ["tag"]
+  args = "images"
 }
