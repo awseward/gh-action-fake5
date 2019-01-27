@@ -5,20 +5,19 @@ This repo presents a very basic GitHub Action for invoking FAKE 5 targets.
 #### Example `.github/main.workflow`:
 
 ```hcl
-workflow "push-heroku-prod" {
+workflow "some-workflow" {
   on = "push"
   resolves = ["some-target"]
 }
 
 action "some-target" {
   uses = "awseward/gh-action-fake5@master"
-
-  args = ["your_target"]
+  args = ["some_target"]
 }
 ```
 
 The above workflow will run the following FAKE call in a GitHub Action:
 
 ```sh
-fake build -t your_target
+fake build -t some_target
 ```
