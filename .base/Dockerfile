@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:2.1.403-sdk
+FROM mcr.microsoft.com/dotnet/sdk:2.1
 
 RUN apt update -y \
  && apt install -y apt-transport-https dirmngr \
